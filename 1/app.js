@@ -6,65 +6,73 @@ class Pokemon {
     }
 
     show() {
-        console.log('Name:' + this.name);
-        console.log('Level:' + this.level);
+        console.log(`Name: ${this.name}`);
+        console.log(`Level: ${this.level}`);
     }
     valueOf() {
         return this.level;
     }
 }
 
-
-class PokemonList {
+class PokemonList extends Array{
     constructor(...pokemons) {
-        this.list = pokemons;
+        super(...pokemons);
     }
+
     add(name, level) {
         let pokemon = new Pokemon(name, level);
 
-        this.list.push(pokemon);
+       this.push(pokemon);
     }
     show() {
-        let listing = this.list;
-        console.log('Всего покемонов' + listing.length);
-        for (let poke of listing) {
-            console.log('Имя:' + poke.name);
-            console.log('Уровень:' + poke.level);
+        //let listing = this.list;
+        console.log(`Всего покемонов: ${this.length}`);
+
+        for (let poke of this) {
+            console.log(`Имя: ${poke.name}`);
+            console.log(`уровень: ${poke.level}`);
         }
     }
     max() {
         let pokeLevels = [];
-        for (let poke of this.list) {
+        for (let poke of this) {
             pokeLevels.push(poke.valueOf());
         }
-        let maxPoke = this.list[pokeLevels.indexOf(Math.max.apply(null, pokeLevels))]
-        console.log('Покемон максимального уровня: ' + maxPoke.name + ' Уровень: ' + maxPoke.level);
+        let maxPoke = this[pokeLevels.indexOf(Math.max.apply(null, pokeLevels))]
+        console.log(`Покемон максимального уровня: ${maxPoke.name} Уровень: ${maxPoke.level}`);
         return maxPoke;
     }
 }
 
 
 
+let found = new PokemonList();
+found.add('Пинсир', 10);
+found.add('Рапидаш', 11);
+found.add('Голем', 12);
+
+
 
 let lost = new PokemonList();
-let found = new PokemonList();
+
+
 lost.add('Райдон', 18);
 lost.add('Нидокинг', 11);
 lost.add('Джолтеон', 14);
 
-found.add('Пинсир', 10);
-found.add('Рапидаш', 11);
-found.add('Голем', 12);
+
+
 
 function pokemonRoulette() {
     let rand = 0 - 0.5 + Math.random() * (2 - 0 + 1)
     rand = Math.floor(rand);
     let num = Math.abs(rand);
-    let founded = lost.list[num];
-    lost.list.splice(num, 1);
+    console.log(num);
+    let founded = lost[num];
+    lost.splice(num, 1);
     found.add(founded.name, founded.level);
 
-    console.log('Вы нашли покемона: ' + founded.name + ' Уровень: ' + founded.level);
+    console.log(`Вы нашли покемона: ${founded.name} Уровень: ${founded.level}`);
 
 }
 
